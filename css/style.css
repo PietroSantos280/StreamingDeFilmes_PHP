@@ -1,0 +1,259 @@
+/* Configuração Geral */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+    min-height: 100vh;
+}
+
+/* Header com Gradiente Roxo e Preto */
+header {
+    background: #111657d2;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 20px;
+}
+
+/* Navegação Desktop */
+header nav {
+    display: flex;
+}
+
+header nav a {
+    color: white;
+    margin-left: 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+/* Área Principal */
+main {
+    padding: 30px;
+}
+
+/* Centralização do Formulário com Gradiente */
+main.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 75vh;
+}
+
+form {
+    width: 100%;
+    max-width: 360px;
+    background: white;
+    color: #111657d2;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    margin: 0 auto;
+}
+
+form label {
+    display: block;
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+form input, form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    border: 1px solid #555;
+    background-color: #ffffff;
+    color: #000;
+    border-radius: 4px;
+}
+
+form button {
+    margin-top: 20px;
+    padding: 10px 16px;
+    background: #111657d2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+}
+
+form button:hover {
+    background: #111657d2;
+}
+
+/* Botão de Cadastrar */
+main > a {
+    display: inline-block;
+    margin-bottom: 15px;
+    padding: 8px 16px;
+    background: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+/* Tabela com Gradiente Roxo e Preto */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    margin-top: 15px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background: #111657d2;
+    color: white;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Botões da Tabela */
+table td a {
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+table td a[href*="atualizar"], table td a[href*="editar"] {
+    background-color: #28a745;
+    color: white;
+}
+
+table td a[href*="excluir"] {
+    background-color: red;
+        color: white;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    color: #666;
+}
+/* Esconde o checkbox e o botão por padrão em telas grandes */
+.nav-toggle-input,
+.nav-toggle {
+    display: none;
+}
+
+/* ===================================================
+   RESPONSIVIDADE E MENU SANDUÍCHE ANIMADO (MOBILE)
+   =================================================== */
+@media (max-width: 768px) {
+    /* Aula 10 - ajuste de responsividade básica */
+    table, thead, tbody, th, td, tr {
+        font-size: 14px;
+    }
+    header {
+        position: relative;
+    }
+
+    /* Esconde a caixa de seleção */
+    .nav-toggle-input {
+        display: none;
+    }
+
+    /* Exibe e estiliza o botão do sanduíche */
+    .nav-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    /* Desenha as 3 barrinhas brancas */
+    .nav-toggle span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        background-color: white;
+        border-radius: 2px;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    /* Animação do ícone para virar "X" ao clicar */
+    .nav-toggle-input:checked ~ .nav-toggle span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .nav-toggle-input:checked ~ .nav-toggle span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .nav-toggle-input:checked ~ .nav-toggle span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* Menu nav oculto por padrão */
+    header nav {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 200px;
+        background-color: #111657d2;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        border-radius: 0 0 0 8px;
+        z-index: 1000;
+
+        /* Transição de abertura suave */
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: max-height 0.35s ease, opacity 0.3s ease;
+    }
+
+    header nav a {
+        display: block;
+        margin: 5px 0;
+        margin: 0;
+        padding: 12px 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    /* Exibe o nav quando o checkbox estiver marcado */
+    .nav-toggle-input:checked ~ nav {
+        max-height: 300px;
+        opacity: 1;
+    }
+
+    /* Ajuste da tabela para mobile */
+    main {
+        overflow-x: auto;
+        padding: 15px;
+    }
+}
