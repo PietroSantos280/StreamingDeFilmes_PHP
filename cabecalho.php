@@ -1,5 +1,6 @@
+
 <?php
-$base_url = '/projeto_php/';
+$base_url = '/StreamingDeFilmes_PHP/';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -24,8 +25,8 @@ $base_url = '/projeto_php/';
         </label>
         <nav>
             <a href="<?php echo $base_url; ?>index.php">Início</a>
-            <a href="<?php echo $base_url; ?>produtos/listar.php">Produtos</a>
+            <a href="<?php echo $base_url; ?>filmes/listar.php">Produtos</a>
             <a href="<?php echo $base_url; ?>login.php">Login</a>
             <a href="<?php echo $base_url; ?>logout.php">Sair</a>
         </nav>
-    </header>v
+    </header>
