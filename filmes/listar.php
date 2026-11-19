@@ -11,6 +11,10 @@ $resultado = mysqli_query($conexao, $sql);
 
 <main>
     <h2>Produtos cadastrados</h2>
+    <?php if (isset($_SESSION['mensagem'])) { ?>
+        <p><?php echo $_SESSION['mensagem']; ?></p>
+        <?php unset($_SESSION['mensagem']); ?>
+    <?php } ?>
     <a href="cadastrar.php">Cadastrar novo produto</a>
 
     <table>

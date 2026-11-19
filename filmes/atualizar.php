@@ -4,13 +4,13 @@ require __DIR__ . '/../conexao.php';
 
 // 1. Quando clicar em "Salvar alterações" (POST)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id              = $_POST['id'];
-    $titulo          = $_POST['titulo'];
-    $sinopse         = $_POST['sinopse'];
-    $ano_lancamento  = $_POST['ano_lancamento'];
-    $avaliacao       = $_POST['avaliacao'];
+    $id = $_POST['id'];
+    $titulo = $_POST['titulo'];
+    $sinopse = $_POST['sinopse'];
+    $ano_lancamento = $_POST['ano_lancamento'];
+    $avaliacao = $_POST['avaliacao'];
     $duracao_minutos = $_POST['duracao_minutos'];
-    $genero          = $_POST['genero'];
+    $genero = $_POST['genero'];
 
     $sql = "UPDATE filmes SET 
                 titulo = '$titulo',
@@ -22,7 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             WHERE id = '$id'";
 
     if (mysqli_query($conexao, $sql)) {
-        header('Location: listar.php'); 
+        $_SESSION['mensagem'] = "Produto atualizado com sucesso!";
+        header('Location: listar.php');
         exit;
     } else {
         echo "Erro ao atualizar: " . mysqli_error($conexao);
@@ -30,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if (!isset($_GET['id']) || empty($_GET['id'])) {
-    header('Location: listar.php'); 
+    header('Location: listar.php');
     exit;
 }
 
@@ -57,10 +58,12 @@ require __DIR__ . '/../cabecalho.php'; ?>
         <textarea name="sinopse" required><?php echo $filme['sinopse']; ?></textarea><br>
 
         <label>Ano de Lançamento:</label>
-        <input type="number" name="ano_lancamento" min="1901" max="2155" value="<?php echo $filme['ano_lancamento']; ?>" required><br>
+        <input type="number" name="ano_lancamento" min="1901" max="2155" value="<?php echo $filme['ano_lancamento']; ?>"
+            required><br>
 
         <label>Avaliação:</label>
-        <input type="number" name="avaliacao" step="0.01" min="0" max="9.99" value="<?php echo $filme['avaliacao']; ?>" required><br>
+        <input type="number" name="avaliacao" step="0.01" min="0" max="9.99" value="<?php echo $filme['avaliacao']; ?>"
+            required><br>
 
         <label>Duração (minutos):</label>
         <input type="number" name="duracao_minutos" value="<?php echo $filme['duracao_minutos']; ?>" required><br>

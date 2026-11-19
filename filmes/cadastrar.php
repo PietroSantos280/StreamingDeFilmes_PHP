@@ -3,12 +3,12 @@ require __DIR__ . '/verifica_login.php';
 require __DIR__ . '/../conexao.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $titulo = $_POST['titulo'];
-    $sinopse = $_POST['sinopse'];
-    $ano = $_POST['ano_lancamento'];
-    $duracao = $_POST['duracao_minutos'];
-    $avaliacao = $_POST['avaliacao'];
-    $genero = $_POST['genero'];
+    $titulo = mysqli_real_escape_string($conexao, trim($_POST['titulo']));
+    $sinopse = mysqli_real_escape_string($conexao, trim($_POST['sinopse']));
+    $ano = trim($_POST['ano_lancamento']);
+    $duracao = trim($_POST['duracao_minutos']);
+    $avaliacao = trim($_POST['avaliacao']);
+    $genero = trim($_POST['genero']);
     if ($titulo == "" || $sinopse == "" || $ano == "" || $duracao == "" || $avaliacao == "" || $genero == "") {
         $mensagem = "Preencha todos os campos obrigatórios.";
     } else {
@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 VALUES ('$titulo', '$sinopse', '$ano', '$duracao', '$avaliacao','$genero')";
 
         if (mysqli_query($conexao, $sql)) {
+            $_SESSION['mensagem'] = "Produto cadastrado com sucesso!";
             header('Location: listar.php');
             exit;
         } else {

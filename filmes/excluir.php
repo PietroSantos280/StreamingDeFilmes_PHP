@@ -8,6 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = "DELETE FROM filmes WHERE id = '$id'";
     mysqli_query($conexao, $sql);
 
+    $_SESSION['mensagem'] = "Produto excluído com sucesso!";
     header('Location: listar.php');
     exit;
 } else {
@@ -23,7 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <main>
     <h2>Excluir Filme</h2>
     <p>Tem certeza que deseja excluir o filme
-       <strong><?php echo $filme['titulo']; ?></strong>?</p>
+        <strong><?php echo $filme['titulo']; ?></strong>?
+    </p>
 
     <form action="excluir.php" method="POST">
         <input type="hidden" name="id" value="<?php echo $filme['id']; ?>">
