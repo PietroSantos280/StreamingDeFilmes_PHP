@@ -70,7 +70,7 @@ StreamingDeFilmes_PHP/
 │   └── verifica_login.php # bloqueia páginas para quem não está logado
 ├── js/
 │   └── modal-filmes.js    # abre o modal "Ver mais" com detalhes e avaliações
-├── banco.sql              # criação do banco, tabelas e usuário de teste
+├── banco.sql              # criação do banco, tabelas, usuário de teste e filmes de exemplo
 ├── cabecalho.php          # topo e menu (incluído em todas as páginas)
 ├── conexao.php            # conexão com o MySQL
 ├── index.php              # página inicial com os destaques

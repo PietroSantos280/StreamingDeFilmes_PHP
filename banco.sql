@@ -53,6 +53,18 @@ CREATE TABLE `filmes` (
   `genero` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `filmes`
+--
+
+INSERT INTO `filmes` (`id`, `titulo`, `sinopse`, `ano_lancamento`, `avaliacao`, `duracao_minutos`, `genero`) VALUES
+(1, 'Interestelar', 'Um grupo de astronautas atravessa um buraco de minhoca em busca de um novo lar para a humanidade.', 2014, 4.80, 169, 'Ficção científica'),
+(2, 'O Poderoso Chefão', 'O patriarca de uma família mafiosa passa o comando dos negócios ao filho mais novo.', 1972, 4.90, 175, 'Drama'),
+(3, 'Cidade de Deus', 'Dois jovens crescem em uma favela do Rio de Janeiro e seguem caminhos opostos.', 2002, 4.70, 130, 'Drama'),
+(4, 'Toy Story', 'Os brinquedos de um garoto ganham vida quando ninguém está olhando.', 1995, 4.50, 81, 'Animação'),
+(5, 'Vingadores: Ultimato', 'Os heróis restantes se unem para desfazer as ações de Thanos.', 2019, 4.40, 181, 'Ação'),
+(6, 'Corra!', 'Um jovem visita a família da namorada e descobre segredos perturbadores.', 2017, 4.20, 104, 'Terror');
+
 -- --------------------------------------------------------
 
 --
@@ -111,7 +123,7 @@ ALTER TABLE `avaliacoes`
 -- AUTO_INCREMENT de tabela `filmes`
 --
 ALTER TABLE `filmes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
