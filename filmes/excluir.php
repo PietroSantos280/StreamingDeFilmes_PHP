@@ -2,36 +2,48 @@
 require __DIR__ . '/verifica_login.php';
 require __DIR__ . '/../conexao.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id = $_POST['id'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = (int) ($_POST['id'] ?? 0);
 
-    $sql = "DELETE FROM filmes WHERE id = '$id'";
-    mysqli_query($conexao, $sql);
+    if ($id > 0) {
+        // Remove avaliações vinculadas antes de excluir o filme para não dar erro de chave estrangeira
+        mysqli_query($conexao, "DELETE FROM avaliacoes WHERE filme_id = $id");
+        mysqli_query($conexao, "DELETE FROM filmes WHERE id = $id");
+        $_SESSION['mensagem'] = "Filme excluído com sucesso!";
+    }
 
-    $_SESSION['mensagem'] = "Produto excluído com sucesso!";
     header('Location: listar.php');
     exit;
-} else {
-    $id = $_GET['id'];
-    $sql = "SELECT * FROM filmes WHERE id = '$id'";
-    $resultado = mysqli_query($conexao, $sql);
-    $filme = mysqli_fetch_assoc($resultado);
 }
-?>
 
-<?php require __DIR__ . '/../cabecalho.php'; ?>
+$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+$resultado = mysqli_query($conexao, "SELECT * FROM filmes WHERE id = $id");
+$filme = $resultado ? mysqli_fetch_assoc($resultado) : null;
+
+if (!$filme) {
+    header('Location: listar.php');
+    exit;
+}
+
+require __DIR__ . '/../cabecalho.php';
+?>
 
 <main>
     <h2>Excluir Filme</h2>
-    <p>Tem certeza que deseja excluir o filme
-        <strong><?php echo $filme['titulo']; ?></strong>?
-    </p>
 
-    <form action="excluir.php" method="POST">
-        <input type="hidden" name="id" value="<?php echo $filme['id']; ?>">
-        <button type="submit">Sim, excluir</button>
-        <a href="listar.php">Cancelar</a>
-    </form>
+    <div class="excluir-box">
+        <i class="fa-solid fa-triangle-exclamation excluir-icone"></i>
+        <p>Tem certeza que deseja excluir o filme <strong><?php echo htmlspecialchars($filme['titulo']); ?></strong>?</p>
+        <span class="excluir-aviso">Essa ação removerá o filme e as avaliações ligadas a ele.</span>
+
+        <form action="excluir.php" method="POST" class="excluir-form">
+            <input type="hidden" name="id" value="<?php echo (int) $filme['id']; ?>">
+            <div class="excluir-botoes">
+                <button type="submit" class="btn-excluir-confirmar">Sim, excluir</button>
+                <a href="listar.php" class="btn-cancelar-acao">Cancelar</a>
+            </div>
+        </form>
+    </div>
 </main>
 
 <?php require __DIR__ . '/../rodape.php'; ?>
