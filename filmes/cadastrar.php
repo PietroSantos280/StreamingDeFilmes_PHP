@@ -16,11 +16,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 VALUES ('$titulo', '$sinopse', '$ano', '$duracao', '$avaliacao','$genero')";
 
         if (mysqli_query($conexao, $sql)) {
-            $_SESSION['mensagem'] = "Produto cadastrado com sucesso!";
+            $_SESSION['mensagem'] = "Filme cadastrado com sucesso!";
             header('Location: listar.php');
             exit;
         } else {
-            $mensagem = "Erro ao cadastrar produto: " . mysqli_error($conexao);
+            $mensagem = "Erro ao cadastrar filme: " . mysqli_error($conexao);
         }
     }
 }
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <?php require __DIR__ . '/../cabecalho.php'; ?>
 
 <main>
-    <h2>Cadastrar Produto</h2>
+    <h2>Cadastrar Filme</h2>
 
     <?php if (isset($mensagem)) { ?>
         <p><?php echo $mensagem; ?></p>

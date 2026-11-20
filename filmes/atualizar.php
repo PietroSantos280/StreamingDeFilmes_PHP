@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             WHERE id = '$id'";
 
     if (mysqli_query($conexao, $sql)) {
-        $_SESSION['mensagem'] = "Produto atualizado com sucesso!";
+        $_SESSION['mensagem'] = "Filme atualizado com sucesso!";
         header('Location: listar.php');
         exit;
     } else {
