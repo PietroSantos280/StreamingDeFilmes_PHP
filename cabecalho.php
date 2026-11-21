@@ -4,6 +4,14 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 $base_url = '/StreamingDeFilmes_PHP/';
 $esta_logado = isset($_SESSION['usuario_id']);
+
+// Marca no menu o link da página atual
+$pagina_atual = $_SERVER['SCRIPT_NAME'];
+function link_ativo($trecho)
+{
+    global $pagina_atual;
+    return str_contains($pagina_atual, $trecho) ? ' class="ativo" aria-current="page"' : '';
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -30,16 +38,16 @@ $esta_logado = isset($_SESSION['usuario_id']);
         </div>
 
         <nav class="nav">
-            <a href="<?php echo $base_url; ?>index.php">Início</a>
-            <a href="<?php echo $base_url; ?>filmes/listar.php">Filmes</a>
+            <a href="<?php echo $base_url; ?>index.php"<?php echo link_ativo('/index.php'); ?>>Início</a>
+            <a href="<?php echo $base_url; ?>filmes/listar.php"<?php echo link_ativo('/filmes/'); ?>>Filmes</a>
 
             <?php if ($esta_logado) { ?>
-                <a href="<?php echo $base_url; ?>avaliacoes/listar.php">Avaliações</a>
-                <a href="<?php echo $base_url; ?>avaliacoes/avaliar.php">Avaliar</a>
+                <a href="<?php echo $base_url; ?>avaliacoes/listar.php"<?php echo link_ativo('/avaliacoes/listar.php'); ?>>Avaliações</a>
+                <a href="<?php echo $base_url; ?>avaliacoes/avaliar.php"<?php echo link_ativo('/avaliacoes/avaliar.php'); ?>>Avaliar</a>
                 <a href="<?php echo $base_url; ?>logout.php">Sair</a>
             <?php } else { ?>
                 <a href="<?php echo $base_url; ?>login.php?aviso=login_necessario">Avaliações</a>
-                <a href="<?php echo $base_url; ?>login.php">Login</a>
+                <a href="<?php echo $base_url; ?>login.php"<?php echo link_ativo('/login.php'); ?>>Login</a>
             <?php } ?>
         </nav>
     </header>
