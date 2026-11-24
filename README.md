@@ -70,7 +70,7 @@ StreamingDeFilmes_PHP/
 │   └── verifica_login.php # bloqueia páginas para quem não está logado
 ├── js/
 │   └── modal-filmes.js    # abre o modal "Ver mais" com detalhes e avaliações
-├── banco.sql              # criação do banco, tabelas, usuário de teste e filmes de exemplo
+├── banco.sql              # criação do banco, tabelas e dados de exemplo (usuários, filmes e avaliações)
 ├── cabecalho.php          # topo e menu (incluído em todas as páginas)
 ├── conexao.php            # conexão com o MySQL
 ├── index.php              # página inicial com os destaques
@@ -107,11 +107,18 @@ Pré-requisito: [XAMPP](https://www.apachefriends.org/) (testado com XAMPP 8.2: 
    http://localhost/StreamingDeFilmes_PHP/
    ```
 
-## Usuário de teste
+## Usuários de teste
 
-| E-mail            | Senha    |
-|-------------------|----------|
-| `admin@email.com` | `123456` |
+Todos já vêm cadastrados no `banco.sql`. Para entrar, use o e-mail e a senha em `http://localhost/StreamingDeFilmes_PHP/login.php`.
+
+| Nome        | E-mail            | Senha      | Avaliações já feitas                              |
+|-------------|-------------------|------------|---------------------------------------------------|
+| admin       | `admin@email.com` | `123456`   | A Origem, O Senhor dos Anéis: A Sociedade do Anel |
+| Maria Silva | `maria@email.com` | `senha123` | Divertida Mente                                   |
+| João Souza  | `joao@email.com`  | `abc456`   | Homem-Aranha: No Aranhaverso                      |
+| Ana Costa   | `ana@email.com`   | `xyz789`   | nenhuma                                           |
+
+Cada usuário só pode excluir as próprias avaliações. Entrando com usuários diferentes, dá para ver o botão **Excluir** aparecer só nas avaliações de quem está logado.
 
 ## Funcionalidades
 
