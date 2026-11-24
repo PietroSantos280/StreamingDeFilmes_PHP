@@ -36,7 +36,7 @@ Banco: `sistema_streaming` (charset `utf8mb4`). Script completo em [`banco.sql`]
 | `titulo`          | `VARCHAR(150)` | `NOT NULL`                                   |
 | `sinopse`         | `TEXT`         | `NOT NULL`                                   |
 | `ano_lancamento`  | `YEAR(4)`      | `NOT NULL`                                   |
-| `avaliacao`       | `DECIMAL(3,2)` | `NOT NULL` — média das notas recebidas       |
+| `avaliacao`       | `DECIMAL(3,2)` | `NOT NULL` — nota cadastrada, usada enquanto o filme não tem avaliações |
 | `duracao_minutos` | `INT(11)`      | `NOT NULL`                                   |
 | `genero`          | `VARCHAR(50)`  | `NOT NULL`                                   |
 
@@ -128,7 +128,7 @@ Cada usuário só pode excluir as próprias avaliações. Entrando com usuários
 - **Atualizar filme** com o formulário já preenchido com os dados atuais.
 - **Excluir filme** com tela de confirmação; as avaliações ligadas ao filme são removidas junto.
 - **Avaliar filme** com nota de 1 a 5 e comentário opcional.
-- **Média automática:** ao criar ou excluir uma avaliação, a nota do filme é recalculada.
+- **Média automática:** a nota exibida é a média das avaliações, calculada na hora. Sem avaliações, aparece a nota cadastrada do filme, marcada como "(base)".
 - **Destaques na página inicial:** os 3 filmes com maior nota.
 - **Excluir avaliação:** cada usuário só pode excluir as próprias avaliações.
 - **Validações:**

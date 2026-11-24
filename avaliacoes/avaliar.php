@@ -5,17 +5,6 @@ require __DIR__ . '/../conexao.php';
 if (!$conexao) {
     die("Erro na conexão com o banco: " . mysqli_connect_error());
 }
-function atualizarMediaFilme(mysqli $conexao, int $filme_id): void
-{
-    $sql_media = "UPDATE filmes
-                  SET avaliacao = COALESCE(
-                      (SELECT ROUND(AVG(Score), 2) FROM avaliacoes WHERE filme_id = $filme_id),
-                      0.00
-                  )
-                  WHERE id = $filme_id";
-    mysqli_query($conexao, $sql_media);
-}
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $usuario_id = (int) ($_SESSION['usuario_id'] ?? 0);
     $filme_id   = (int) ($_POST['filme_id'] ?? 0);
@@ -29,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 VALUES ($usuario_id, $filme_id, $score, '$comentario')";
 
         if (mysqli_query($conexao, $sql)) {
-            atualizarMediaFilme($conexao, $filme_id);
             $_SESSION['mensagem'] = "Avaliação registrada com sucesso!";
             header('Location: listar.php');
             exit;

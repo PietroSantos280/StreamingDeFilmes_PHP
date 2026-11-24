@@ -10,17 +10,8 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
     $avaliacao = $busca ? mysqli_fetch_assoc($busca) : null;
 
     if ($avaliacao) {
-        $filme_id = (int) $avaliacao['filme_id'];
+        // A média é calculada na hora nas telas; a nota cadastrada do filme não é alterada
         if (mysqli_query($conexao, "DELETE FROM avaliacoes WHERE id = $id AND usuario_id = $usuario_id")) {
-            mysqli_query(
-                $conexao,
-                "UPDATE filmes
-                 SET avaliacao = COALESCE(
-                     (SELECT ROUND(AVG(Score), 2) FROM avaliacoes WHERE filme_id = $filme_id),
-                     0.00
-                 )
-                 WHERE id = $filme_id"
-            );
             $_SESSION['mensagem'] = "Avaliação excluída com sucesso!";
         }
     }
