@@ -77,7 +77,6 @@ INSERT INTO `filmes` (`id`, `titulo`, `sinopse`, `ano_lancamento`, `avaliacao`, 
 (7, 'A Origem', 'Um ladrão que rouba segredos através dos sonhos recebe a missão de plantar uma ideia na mente de um CEO.', '2010', 4.80, 148, 'Ficção científica'),
 (8, 'O Senhor dos Anéis: A Sociedade do Anel', 'Um jovem hobbit herda um anel mágico e parte numa jornada épica para destruí-lo.', '2001', 4.90, 178, 'Fantasia'),
 (9, 'Divertida Mente', 'As emoções dentro da mente de uma menina trabalham juntas para ajudá-la a adaptar-se a uma nova cidade.', '2015', 4.60, 95, 'Animação'),
-(10, 'Interestelar', 'Um grupo de astronautas atravessa um buraco de minhoca em busca de um novo lar para a humanidade.', '2014', 4.80, 169, 'Ficção científica'),
 (11, 'Homem-Aranha: No Aranhaverso', 'Um jovem torna-se o Homem-Aranha do seu universo e une-se a heróis de outras dimensões.', '2018', 4.70, 117, 'Animação');
 
 -- --------------------------------------------------------
