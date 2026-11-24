@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . '/verifica_login.php';
+exigir_admin();
 require __DIR__ . '/../conexao.php';
 require __DIR__ . '/validar_filme.php';
 
@@ -62,7 +63,7 @@ if (!isset($filme)) {
 require __DIR__ . '/../cabecalho.php'; ?>
 
 <main>
-    <h2>Atualizar Filme</h2>
+    <h1>Atualizar Filme</h1>
 
     <?php if (isset($mensagem)) { ?>
         <p class="msg-erro" role="alert"><?php echo htmlspecialchars($mensagem); ?></p>

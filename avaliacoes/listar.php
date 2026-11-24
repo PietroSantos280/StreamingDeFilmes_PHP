@@ -21,8 +21,8 @@ require __DIR__ . '/../cabecalho.php';
 
 <main>
     <div class="topo-secao">
-        <h2>Avaliações dos Usuários</h2>
-        <a href="avaliar.php" class="btn-novo-acao"><i class="fa-solid fa-plus"></i> Nova Avaliação</a>
+        <h1>Avaliações dos Usuários</h1>
+        <a href="avaliar.php" class="btn-novo-acao"><i class="fa-solid fa-plus" aria-hidden="true"></i> Nova Avaliação</a>
     </div>
 
     <?php if (isset($_SESSION['mensagem'])) { ?>
@@ -36,11 +36,11 @@ require __DIR__ . '/../cabecalho.php';
                 <article class="avaliacao-card">
                     <div class="avaliacao-header">
                         <h3><?php echo htmlspecialchars($row['filme_titulo']); ?></h3>
-                        <span class="avaliacao-score"><i class="fa-solid fa-star"></i> <?php echo (int) $row['Score']; ?> / 5</span>
+                        <span class="avaliacao-score"><i class="fa-solid fa-star" aria-hidden="true"></i> <?php echo (int) $row['Score']; ?> / 5</span>
                     </div>
 
                     <p class="avaliacao-autor">
-                        <i class="fa-regular fa-user"></i> <?php echo htmlspecialchars($row['usuario_nome']); ?>
+                        <i class="fa-regular fa-user" aria-hidden="true"></i> <?php echo htmlspecialchars($row['usuario_nome']); ?>
                     </p>
 
                     <div class="avaliacao-comentario">

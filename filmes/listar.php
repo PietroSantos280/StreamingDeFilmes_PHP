@@ -45,14 +45,16 @@ require __DIR__ . '/../cabecalho.php';
 ?>
 
 <main>
-    <h2>Filmes cadastrados</h2>
+    <h1>Filmes cadastrados</h1>
 
     <?php if (isset($_SESSION['mensagem'])) { ?>
         <p class="msg-alerta" role="status"><?php echo htmlspecialchars($_SESSION['mensagem']); ?></p>
         <?php unset($_SESSION['mensagem']); ?>
     <?php } ?>
 
-    <a href="cadastrar.php" class="btn-novo">+ Cadastrar novo filme</a>
+    <?php if (e_admin()) { ?>
+        <a href="cadastrar.php" class="btn-novo">+ Cadastrar novo filme</a>
+    <?php } ?>
 
     <?php if ($resultado && mysqli_num_rows($resultado) > 0) { ?>
         <div class="filmes-grid">
@@ -77,8 +79,8 @@ require __DIR__ . '/../cabecalho.php';
             ?>
                 <article class="filme-card">
                     <div class="filme-thumb">
-                        <i class="fa-solid fa-film"></i>
-                        <span class="badge-nota"><i class="fa-solid fa-star"></i> <?php echo htmlspecialchars($media_texto); ?></span>
+                        <i class="fa-solid fa-film" aria-hidden="true"></i>
+                        <span class="badge-nota"><i class="fa-solid fa-star" aria-hidden="true"></i> <?php echo htmlspecialchars($media_texto); ?></span>
                     </div>
                     <div class="filme-corpo">
                         <h3><?php echo htmlspecialchars($filme['titulo']); ?></h3>
@@ -114,8 +116,10 @@ require __DIR__ . '/../cabecalho.php';
         </div>
 
         <div class="modal-acoes">
-            <a id="btn-editar" href="#" class="acao-editar">Editar</a>
-            <a id="btn-excluir" href="#" class="acao-excluir">Excluir</a>
+            <?php if (e_admin()) { ?>
+                <a id="btn-editar" href="#" class="acao-editar">Editar</a>
+                <a id="btn-excluir" href="#" class="acao-excluir">Excluir</a>
+            <?php } ?>
             <a id="btn-avaliar" href="#" class="acao-avaliar">Fazer avaliação</a>
             <button type="button" id="btn-fechar-modal" class="acao-sair">Sair</button>
         </div>

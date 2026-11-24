@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . '/verifica_login.php';
+exigir_admin();
 require __DIR__ . '/../conexao.php';
 require __DIR__ . '/validar_filme.php';
 
@@ -40,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <?php require __DIR__ . '/../cabecalho.php'; ?>
 
 <main>
-    <h2>Cadastrar Filme</h2>
+    <h1>Cadastrar Filme</h1>
 
     <?php if (isset($mensagem)) { ?>
         <p class="msg-erro" role="alert"><?php echo htmlspecialchars($mensagem); ?></p>

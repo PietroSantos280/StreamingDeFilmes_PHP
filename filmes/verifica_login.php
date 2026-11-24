@@ -1,5 +1,5 @@
 <?php
-session_start();
+require __DIR__ . '/../sessao.php';
 
 if (!isset($_SESSION['usuario_id'])) {
     header('Location: /StreamingDeFilmes_PHP/login.php');
@@ -14,6 +14,21 @@ if (empty($_SESSION['csrf'])) {
 function campo_csrf()
 {
     return '<input type="hidden" name="csrf" value="' . $_SESSION['csrf'] . '">';
+}
+
+// Só administradores cadastram, editam e excluem filmes
+function e_admin()
+{
+    return !empty($_SESSION['admin']);
+}
+
+function exigir_admin()
+{
+    if (!e_admin()) {
+        $_SESSION['mensagem'] = 'Apenas administradores podem cadastrar, editar ou excluir filmes.';
+        header('Location: /StreamingDeFilmes_PHP/filmes/listar.php');
+        exit;
+    }
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !hash_equals($_SESSION['csrf'], $_POST['csrf'] ?? '')) {

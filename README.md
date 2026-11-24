@@ -27,6 +27,7 @@ Banco: `sistema_streaming` (charset `utf8mb4`). Script completo em [`banco.sql`]
 | `nome`  | `VARCHAR(100)` | `NOT NULL`                  |
 | `email` | `VARCHAR(100)` | `NOT NULL`                  |
 | `senha` | `VARCHAR(250)` | `NOT NULL`                  |
+| `admin` | `TINYINT(1)`   | `NOT NULL`, padrão `0` — `1` = administrador |
 
 ### Tabela `filmes`
 
@@ -71,6 +72,7 @@ StreamingDeFilmes_PHP/
 │   └── verifica_login.php # bloqueia páginas para quem não está logado
 ├── js/
 │   └── modal-filmes.js    # abre o modal "Ver mais" com detalhes e avaliações
+├── .htaccess              # bloqueia o acesso pelo navegador ao banco.sql, ao README e à pasta .git
 ├── banco.sql              # criação do banco, tabelas e dados de exemplo (usuários, filmes e avaliações)
 ├── cabecalho.php          # topo e menu (incluído em todas as páginas)
 ├── conexao.php            # conexão com o MySQL
@@ -78,6 +80,7 @@ StreamingDeFilmes_PHP/
 ├── login.php
 ├── logout.php
 ├── rodape.php
+├── sessao.php             # inicia a sessão com cookie protegido
 └── README.md
 ```
 
@@ -112,22 +115,24 @@ Pré-requisito: [XAMPP](https://www.apachefriends.org/) (testado com XAMPP 8.2: 
 
 Todos já vêm cadastrados no `banco.sql`. Para entrar, use o e-mail e a senha em `http://localhost/StreamingDeFilmes_PHP/login.php`. No banco as senhas ficam guardadas com `password_hash`, então lá aparece só o hash, não a senha abaixo.
 
-| Nome        | E-mail            | Senha      | Avaliações já feitas                              |
-|-------------|-------------------|------------|---------------------------------------------------|
-| admin       | `admin@email.com` | `123456`   | A Origem, O Senhor dos Anéis: A Sociedade do Anel |
-| Maria Silva | `maria@email.com` | `senha123` | Divertida Mente                                   |
-| João Souza  | `joao@email.com`  | `abc456`   | Homem-Aranha: No Aranhaverso                      |
-| Ana Costa   | `ana@email.com`   | `xyz789`   | nenhuma                                           |
+| Nome        | E-mail            | Senha      | Perfil        | Avaliações já feitas                              |
+|-------------|-------------------|------------|---------------|---------------------------------------------------|
+| admin       | `admin@email.com` | `123456`   | administrador | A Origem, O Senhor dos Anéis: A Sociedade do Anel |
+| Maria Silva | `maria@email.com` | `senha123` | comum         | Divertida Mente                                   |
+| João Souza  | `joao@email.com`  | `abc456`   | comum         | Homem-Aranha: No Aranhaverso                      |
+| Ana Costa   | `ana@email.com`   | `xyz789`   | comum         | nenhuma                                           |
 
-Cada usuário só pode excluir as próprias avaliações. Entrando com usuários diferentes, dá para ver o botão **Excluir** aparecer só nas avaliações de quem está logado.
+- **Para testar o CRUD de filmes** (cadastrar, editar e excluir), entre com o `admin`. Usuários comuns veem o catálogo e avaliam, mas não têm esses botões.
+- Cada usuário só pode excluir as próprias avaliações. Entrando com usuários diferentes, dá para ver o botão **Excluir** aparecer só nas avaliações de quem está logado.
 
 ## Funcionalidades
 
 - **Login e logout** com sessão (`$_SESSION`); páginas de filmes e avaliações só abrem para usuários logados.
 - **Listar filmes** em cards, com a média de notas e um modal "Ver mais" que mostra sinopse, gênero e os comentários recebidos.
+- **Perfis:** só o administrador cadastra, edita e exclui filmes; o bloqueio vale também para quem digitar a URL direto.
 - **Cadastrar filme** (título, sinopse, ano, duração, avaliação e gênero).
 - **Atualizar filme** com o formulário já preenchido com os dados atuais.
-- **Excluir filme** com tela de confirmação; as avaliações ligadas ao filme são removidas junto.
+- **Excluir filme** com tela de confirmação; as avaliações ligadas ao filme são removidas junto, numa transação (ou apaga tudo, ou nada).
 - **Avaliar filme** com nota de 1 a 5 e comentário opcional.
 - **Média automática:** a nota exibida é a média das avaliações, calculada na hora. Sem avaliações, aparece a nota cadastrada do filme, marcada como "(base)".
 - **Destaques na página inicial:** os 3 filmes com maior nota.
@@ -140,4 +145,7 @@ Cada usuário só pode excluir as próprias avaliações. Entrando com usuários
   - consultas com dados do usuário feitas com *prepared statements* (`mysqli_prepare`), contra SQL injection;
   - senhas guardadas com `password_hash` e conferidas com `password_verify`;
   - formulários com token CSRF (conferido em `filmes/verifica_login.php`), e exclusões feitas só por POST;
-  - erros do banco mostram mensagens amigáveis, sem detalhes técnicos.
+  - erros do banco mostram mensagens amigáveis, sem detalhes técnicos;
+  - cookie de sessão com `HttpOnly` e `SameSite=Lax`, e o logout apaga a sessão e o cookie;
+  - `.htaccess` impede baixar o `banco.sql` e a pasta `.git` pelo navegador.
+- **Acessibilidade:** um `<h1>` por página, campos com `<label>`, ícones escondidos dos leitores de tela, botões com pelo menos 44px de altura e contraste adequado no hover.

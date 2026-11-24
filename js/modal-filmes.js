@@ -56,8 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
         avaliacaoEl.textContent = filme.avaliacao;
         sinopseEl.textContent = filme.sinopse;
 
-        btnEditar.href = `atualizar.php?id=${filme.id}`;
-        btnExcluir.href = `excluir.php?id=${filme.id}`;
+        // Editar e Excluir só existem na página para administradores
+        if (btnEditar) btnEditar.href = `atualizar.php?id=${filme.id}`;
+        if (btnExcluir) btnExcluir.href = `excluir.php?id=${filme.id}`;
         btnAvaliar.href = `../avaliacoes/avaliar.php?filme_id=${filme.id}`;
 
         renderComentarios(filme.comentarios);

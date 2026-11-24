@@ -1,7 +1,5 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+require __DIR__ . '/sessao.php';
 $base_url = '/StreamingDeFilmes_PHP/';
 $esta_logado = isset($_SESSION['usuario_id']);
 

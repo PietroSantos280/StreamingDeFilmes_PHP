@@ -1,0 +1,7 @@
+# Bloqueia o acesso pelo navegador a arquivos que não são páginas
+<FilesMatch "\.(sql|md)$">
+    Require all denied
+</FilesMatch>
+
+# Esconde a pasta .git caso o projeto seja clonado direto no htdocs
+RedirectMatch 404 /\.git

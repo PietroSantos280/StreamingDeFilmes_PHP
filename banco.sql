@@ -94,18 +94,19 @@ CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `senha` varchar(250) NOT NULL
+  `senha` varchar(250) NOT NULL,
+  `admin` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`) VALUES
-(1, 'admin', 'admin@email.com', '$2y$10$SRsCZQGYGtzQsj7Gx9sct.P4NNtH2T4kyw0j5vBl5SM69OmusCLKW'),
-(2, 'Maria Silva', 'maria@email.com', '$2y$10$KUwNPrQFXBJWUnJ6BtUgT.uxRLOgD5mXPXNENHQMZ4sBfwgCSXtfG'),
-(3, 'João Souza', 'joao@email.com', '$2y$10$gdab3rVaqdoU5QD2BVvvD.FDW9R/QGkL7nN6TUZ8Cjd/pnihzkoH6'),
-(4, 'Ana Costa', 'ana@email.com', '$2y$10$2zp20O5dFK78ej3O0ZVYaecHCUxvWrR6qnx8k4BTJWxFZdK.EH93i');
+INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `admin`) VALUES
+(1, 'admin', 'admin@email.com', '$2y$10$SRsCZQGYGtzQsj7Gx9sct.P4NNtH2T4kyw0j5vBl5SM69OmusCLKW', 1),
+(2, 'Maria Silva', 'maria@email.com', '$2y$10$KUwNPrQFXBJWUnJ6BtUgT.uxRLOgD5mXPXNENHQMZ4sBfwgCSXtfG', 0),
+(3, 'João Souza', 'joao@email.com', '$2y$10$gdab3rVaqdoU5QD2BVvvD.FDW9R/QGkL7nN6TUZ8Cjd/pnihzkoH6', 0),
+(4, 'Ana Costa', 'ana@email.com', '$2y$10$2zp20O5dFK78ej3O0ZVYaecHCUxvWrR6qnx8k4BTJWxFZdK.EH93i', 0);
 
 --
 -- Índices para tabelas despejadas

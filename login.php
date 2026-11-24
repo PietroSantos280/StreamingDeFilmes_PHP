@@ -1,5 +1,5 @@
 <?php
-session_start();
+require __DIR__ . '/sessao.php';
 require __DIR__ . '/conexao.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $senha = $_POST['senha'] ?? '';
 
     // Busca pelo e-mail com consulta preparada e confere a senha pelo hash
-    $stmt = mysqli_prepare($conexao, "SELECT id, nome, senha FROM usuarios WHERE email = ?");
+    $stmt = mysqli_prepare($conexao, "SELECT id, nome, senha, admin FROM usuarios WHERE email = ?");
     mysqli_stmt_bind_param($stmt, 's', $email);
     mysqli_stmt_execute($stmt);
     $usuario = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         session_regenerate_id(true);
         $_SESSION['usuario_id'] = $usuario['id'];
         $_SESSION['usuario_nome'] = $usuario['nome'];
+        $_SESSION['admin'] = (bool) $usuario['admin'];
         header('Location: /StreamingDeFilmes_PHP/filmes/listar.php');
         exit;
     } else {
@@ -27,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <?php require __DIR__ . '/cabecalho.php'; ?>
 
 <main>
-    <h2>Login</h2>
+    <h1>Login</h1>
 
     <?php if (isset($mensagem)) { ?>
         <p class="msg-erro" role="alert"><?php echo htmlspecialchars($mensagem); ?></p>

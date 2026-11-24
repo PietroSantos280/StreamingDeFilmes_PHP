@@ -39,7 +39,7 @@ require __DIR__ . '/../cabecalho.php';
 ?>
 
 <main>
-    <h2>Nova Avaliação</h2>
+    <h1>Nova Avaliação</h1>
 
     <?php if (isset($mensagem)) { ?>
         <p class="msg-erro" role="alert"><?php echo htmlspecialchars($mensagem); ?></p>

@@ -14,7 +14,7 @@
     --texto-suave: #cbd5e1;
     --texto-mudo: #94a3b8;
     --azul: #2563eb;
-    --azul-claro: #3b82f6;
+    --azul-claro: #1d4ed8; /* hover mais escuro: contraste 6.7:1 com branco */
     --ciano: #38bdf8;
     --amarelo: #facc15;
     --verde: #34d399;
@@ -139,6 +139,7 @@ main {
     padding: 40px 24px 56px;
 }
 
+main h1,
 main h2 {
     margin-bottom: 24px;
     padding-left: 12px;
@@ -152,6 +153,8 @@ main p {
 }
 
 /* Título alinhado ao formulário nas páginas que só têm um formulário */
+main:has(> form) > h1,
+main:has(> .excluir-box) > h1,
 main:has(> form) > h2,
 main:has(> .excluir-box) > h2 {
     max-width: 460px;
@@ -191,6 +194,31 @@ main > a:hover,
 form button:hover {
     background: var(--azul-claro);
     transform: translateY(-1px);
+}
+
+/* Alvo de toque mínimo de 44px (WCAG 2.5.5) */
+.nav a,
+.menu-toggle,
+main > a,
+.btn-novo-acao,
+form button,
+.btn-ver-mais,
+.modal-acoes a,
+.modal-acoes button,
+.btn-excluir-card,
+.btn-cancelar-acao {
+    min-height: 44px;
+}
+
+.nav a,
+.modal-acoes a,
+.btn-cancelar-acao {
+    display: inline-flex;
+    align-items: center;
+}
+
+.menu-toggle {
+    min-width: 44px;
 }
 
 /* ===================================================
@@ -335,7 +363,7 @@ form button {
     font-weight: 500;
 }
 
-.hero-home h2 {
+.hero-home h1 {
     margin-bottom: 12px;
     padding-left: 0;
     border-left: none;
@@ -343,7 +371,7 @@ form button {
     font-weight: 700;
 }
 
-.hero-home h2 span {
+.hero-home h1 span {
     color: var(--ciano);
 }
 
@@ -655,7 +683,7 @@ form button {
     margin-bottom: 24px;
 }
 
-.topo-secao h2 {
+.topo-secao h1 {
     margin-bottom: 0;
 }
 
@@ -819,7 +847,7 @@ form button {
 }
 
 .excluir-botoes .btn-excluir-confirmar:hover {
-    background: #ef4444;
+    background: #b91c1c;
 }
 
 .btn-cancelar-acao {
@@ -896,7 +924,7 @@ footer p {
         padding: 32px 22px;
     }
 
-    .hero-home h2 {
+    .hero-home h1 {
         font-size: 1.7rem;
     }
 

@@ -15,8 +15,8 @@ $res_destaques = mysqli_query($conexao, $sql_destaques);
 
 <main>
     <section class="hero-home">
-        <span class="hero-tag"><i class="fa-solid fa-bolt"></i> Streaming & Críticas</span>
-        <h2>Bem-vindo ao <span>StreamUp</span></h2>
+        <span class="hero-tag"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Streaming & Críticas</span>
+        <h1>Bem-vindo ao <span>StreamUp</span></h1>
         <p>Acompanhe os filmes em destaque e as notas da comunidade.</p>
     </section>
 
@@ -27,9 +27,9 @@ $res_destaques = mysqli_query($conexao, $sql_destaques);
                 <?php while ($filme = mysqli_fetch_assoc($res_destaques)) { ?>
                     <article class="filme-card">
                         <div class="filme-thumb">
-                            <i class="fa-solid fa-clapperboard"></i>
+                            <i class="fa-solid fa-clapperboard" aria-hidden="true"></i>
                             <span class="badge-nota">
-                                <i class="fa-solid fa-star"></i> <?php echo number_format((float) $filme['nota_final'], 1, ',', '.'); ?> / 5
+                                <i class="fa-solid fa-star" aria-hidden="true"></i> <?php echo number_format((float) $filme['nota_final'], 1, ',', '.'); ?> / 5
                             </span>
                         </div>
                         <div class="filme-corpo">
