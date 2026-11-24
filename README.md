@@ -138,4 +138,6 @@ Cada usuário só pode excluir as próprias avaliações. Entrando com usuários
   - textos exibidos com `htmlspecialchars` para não quebrar a página.
 - **Segurança:**
   - consultas com dados do usuário feitas com *prepared statements* (`mysqli_prepare`), contra SQL injection;
-  - senhas guardadas com `password_hash` e conferidas com `password_verify`.
+  - senhas guardadas com `password_hash` e conferidas com `password_verify`;
+  - formulários com token CSRF (conferido em `filmes/verifica_login.php`), e exclusões feitas só por POST;
+  - erros do banco mostram mensagens amigáveis, sem detalhes técnicos.

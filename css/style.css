@@ -118,9 +118,13 @@ a {
 
 .menu-toggle {
     display: none;
-    padding: 4px;
+    padding: 8px 10px;
+    border: 0;
+    border-radius: var(--raio-sm);
+    background: none;
     color: var(--ciano);
     font-size: 1.4rem;
+    line-height: 1;
     cursor: pointer;
 }
 
@@ -201,6 +205,36 @@ form button:hover {
     background: rgba(52, 211, 153, 0.08);
     color: #d1fae5 !important;
     font-size: 0.92rem;
+}
+
+.msg-erro,
+.msg-aviso {
+    margin: 0 0 20px;
+    padding: 12px 16px;
+    border-radius: var(--raio-sm);
+    font-size: 0.92rem;
+}
+
+.msg-erro {
+    border: 1px solid rgba(248, 113, 113, 0.3);
+    border-left: 3px solid var(--vermelho);
+    background: rgba(248, 113, 113, 0.08);
+    color: #fee2e2 !important;
+}
+
+.msg-aviso {
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-left: 3px solid var(--ciano);
+    background: rgba(56, 189, 248, 0.08);
+    color: #e0f2fe !important;
+}
+
+/* Mensagens alinhadas ao formulário nas páginas que só têm um formulário */
+main:has(> form) > .msg-erro,
+main:has(> form) > .msg-aviso {
+    max-width: 460px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* ===================================================
@@ -696,7 +730,22 @@ form button {
     justify-content: flex-end;
 }
 
+/* Formulário de um botão só (ex.: excluir avaliação), sem a caixa dos formulários */
+.form-inline {
+    display: inline;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    box-shadow: none;
+}
+
 .btn-excluir-card {
+    width: auto;
+    margin-top: 0;
+    font-family: inherit;
+    cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: 6px;

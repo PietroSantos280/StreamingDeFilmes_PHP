@@ -48,7 +48,7 @@ require __DIR__ . '/../cabecalho.php';
     <h2>Filmes cadastrados</h2>
 
     <?php if (isset($_SESSION['mensagem'])) { ?>
-        <p class="msg-alerta"><?php echo htmlspecialchars($_SESSION['mensagem']); ?></p>
+        <p class="msg-alerta" role="status"><?php echo htmlspecialchars($_SESSION['mensagem']); ?></p>
         <?php unset($_SESSION['mensagem']); ?>
     <?php } ?>
 

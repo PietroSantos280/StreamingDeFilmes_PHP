@@ -2,18 +2,19 @@
 require __DIR__ . '/../filmes/verifica_login.php';
 require __DIR__ . '/../conexao.php';
 
-if (isset($_GET['id']) && !empty($_GET['id'])) {
-    $id = (int) $_GET['id'];
+// Só aceita POST (com token CSRF, conferido em verifica_login.php)
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = (int) ($_POST['id'] ?? 0);
     $usuario_id = (int) ($_SESSION['usuario_id'] ?? 0);
 
-    $busca = mysqli_query($conexao, "SELECT filme_id FROM avaliacoes WHERE id = $id AND usuario_id = $usuario_id");
-    $avaliacao = $busca ? mysqli_fetch_assoc($busca) : null;
+    // O "AND usuario_id" garante que cada usuário só exclui as próprias avaliações.
+    // A média é calculada na hora nas telas; a nota cadastrada do filme não é alterada.
+    $stmt = mysqli_prepare($conexao, "DELETE FROM avaliacoes WHERE id = ? AND usuario_id = ?");
+    mysqli_stmt_bind_param($stmt, 'ii', $id, $usuario_id);
+    mysqli_stmt_execute($stmt);
 
-    if ($avaliacao) {
-        // A média é calculada na hora nas telas; a nota cadastrada do filme não é alterada
-        if (mysqli_query($conexao, "DELETE FROM avaliacoes WHERE id = $id AND usuario_id = $usuario_id")) {
-            $_SESSION['mensagem'] = "Avaliação excluída com sucesso!";
-        }
+    if (mysqli_stmt_affected_rows($stmt) === 1) {
+        $_SESSION['mensagem'] = "Avaliação excluída com sucesso!";
     }
 }
 

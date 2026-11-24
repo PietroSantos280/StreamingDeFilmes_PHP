@@ -23,6 +23,11 @@ SET time_zone = "+00:00";
 CREATE DATABASE IF NOT EXISTS `sistema_streaming` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `sistema_streaming`;
 
+-- Permite importar de novo sobre um banco que já existe
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS `avaliacoes`, `filmes`, `usuarios`;
+SET FOREIGN_KEY_CHECKS = 1;
+
 -- --------------------------------------------------------
 
 --

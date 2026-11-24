@@ -2,34 +2,38 @@
 require __DIR__ . '/../filmes/verifica_login.php';
 require __DIR__ . '/../conexao.php';
 
-if (!$conexao) {
-    die("Erro na conexão com o banco: " . mysqli_connect_error());
-}
+$filme_selecionado = (int) ($_GET['filme_id'] ?? 0);
+$comentario = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $usuario_id = (int) ($_SESSION['usuario_id'] ?? 0);
     $filme_id   = (int) ($_POST['filme_id'] ?? 0);
     $score      = (int) ($_POST['Score'] ?? 0);
-    $comentario = mysqli_real_escape_string($conexao, trim($_POST['comentario'] ?? ''));
+    $comentario = trim($_POST['comentario'] ?? '');
+    $filme_selecionado = $filme_id;
 
     if ($usuario_id <= 0 || $filme_id <= 0 || $score < 1 || $score > 5) {
         $mensagem = "Selecione um filme e dê uma nota válida entre 1 e 5.";
     } else {
-        $sql = "INSERT INTO avaliacoes (usuario_id, filme_id, Score, comentario)
-                VALUES ($usuario_id, $filme_id, $score, '$comentario')";
+        try {
+            $stmt = mysqli_prepare(
+                $conexao,
+                "INSERT INTO avaliacoes (usuario_id, filme_id, Score, comentario) VALUES (?, ?, ?, ?)"
+            );
+            mysqli_stmt_bind_param($stmt, 'iiis', $usuario_id, $filme_id, $score, $comentario);
+            mysqli_stmt_execute($stmt);
 
-        if (mysqli_query($conexao, $sql)) {
             $_SESSION['mensagem'] = "Avaliação registrada com sucesso!";
             header('Location: listar.php');
             exit;
-        } else {
-            $mensagem = "Erro ao registrar avaliação: " . mysqli_error($conexao);
+        } catch (mysqli_sql_exception $e) {
+            // Ex.: o filme foi excluído em outra aba
+            $mensagem = "Não foi possível registrar a avaliação. Verifique se o filme ainda existe.";
         }
     }
 }
 
-$sql_filmes = "SELECT id, titulo FROM filmes ORDER BY titulo ASC";
-$res_filmes = mysqli_query($conexao, $sql_filmes);
-$filme_selecionado = isset($_GET['filme_id']) ? (int) $_GET['filme_id'] : 0;
+$res_filmes = mysqli_query($conexao, "SELECT id, titulo FROM filmes ORDER BY titulo ASC");
 
 require __DIR__ . '/../cabecalho.php';
 ?>
@@ -37,7 +41,13 @@ require __DIR__ . '/../cabecalho.php';
 <main>
     <h2>Nova Avaliação</h2>
 
+    <?php if (isset($mensagem)) { ?>
+        <p class="msg-erro" role="alert"><?php echo htmlspecialchars($mensagem); ?></p>
+    <?php } ?>
+
     <form action="avaliar.php" method="POST">
+        <?php echo campo_csrf(); ?>
+
         <label for="filme_id">Filme:</label>
         <select name="filme_id" id="filme_id" required>
             <option value="">-- Selecione um filme --</option>
@@ -54,7 +64,7 @@ require __DIR__ . '/../cabecalho.php';
         <input type="number" name="Score" id="Score" min="1" max="5" required>
 
         <label for="comentario">Comentário:</label>
-        <textarea name="comentario" id="comentario" rows="4" placeholder="Deixe seu comentário (opcional)"></textarea>
+        <textarea name="comentario" id="comentario" rows="4" placeholder="Deixe seu comentário (opcional)"><?php echo htmlspecialchars($comentario); ?></textarea>
 
         <button type="submit">Salvar Avaliação</button>
     </form>

@@ -26,7 +26,7 @@ require __DIR__ . '/../cabecalho.php';
     </div>
 
     <?php if (isset($_SESSION['mensagem'])) { ?>
-        <p class="msg-alerta"><?php echo htmlspecialchars($_SESSION['mensagem']); ?></p>
+        <p class="msg-alerta" role="status"><?php echo htmlspecialchars($_SESSION['mensagem']); ?></p>
         <?php unset($_SESSION['mensagem']); ?>
     <?php } ?>
 
@@ -49,9 +49,13 @@ require __DIR__ . '/../cabecalho.php';
 
                     <?php if ((int) $row['usuario_id'] === (int) $_SESSION['usuario_id']) { ?>
                         <div class="avaliacao-rodape">
-                            <a href="excluir.php?id=<?php echo (int) $row['id']; ?>" class="btn-excluir-card" onclick="return confirm('Deseja excluir esta avaliação?');">
-                                <i class="fa-solid fa-trash"></i> Excluir
-                            </a>
+                            <form action="excluir.php" method="POST" class="form-inline" onsubmit="return confirm('Deseja excluir esta avaliação?');">
+                                <?php echo campo_csrf(); ?>
+                                <input type="hidden" name="id" value="<?php echo (int) $row['id']; ?>">
+                                <button type="submit" class="btn-excluir-card">
+                                    <i class="fa-solid fa-trash" aria-hidden="true"></i> Excluir
+                                </button>
+                            </form>
                         </div>
                     <?php } ?>
                 </article>

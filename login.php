@@ -30,15 +30,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <h2>Login</h2>
 
     <?php if (isset($mensagem)) { ?>
-        <p><?php echo $mensagem; ?></p>
+        <p class="msg-erro" role="alert"><?php echo htmlspecialchars($mensagem); ?></p>
+    <?php } elseif (($_GET['aviso'] ?? '') === 'login_necessario') { ?>
+        <p class="msg-aviso" role="status">Faça login para ver e criar avaliações.</p>
     <?php } ?>
 
     <form action="/StreamingDeFilmes_PHP/login.php" method="POST">
-        <label>E-mail:</label>
-        <input type="text" name="email"><br>
+        <label for="email">E-mail:</label>
+        <input type="email" name="email" id="email" value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>" required autocomplete="email"><br>
 
-        <label>Senha:</label>
-        <input type="password" name="senha"><br>
+        <label for="senha">Senha:</label>
+        <input type="password" name="senha" id="senha" required autocomplete="current-password"><br>
 
         <button type="submit">Entrar</button>
     </form>

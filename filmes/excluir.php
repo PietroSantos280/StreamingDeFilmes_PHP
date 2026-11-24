@@ -37,6 +37,7 @@ require __DIR__ . '/../cabecalho.php';
         <span class="excluir-aviso">Essa ação removerá o filme e as avaliações ligadas a ele.</span>
 
         <form action="excluir.php" method="POST" class="excluir-form">
+            <?php echo campo_csrf(); ?>
             <input type="hidden" name="id" value="<?php echo (int) $filme['id']; ?>">
             <div class="excluir-botoes">
                 <button type="submit" class="btn-excluir-confirmar">Sim, excluir</button>

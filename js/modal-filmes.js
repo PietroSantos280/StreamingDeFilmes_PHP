@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnExcluir = document.getElementById('btn-excluir');
     const btnAvaliar = document.getElementById('btn-avaliar');
     const btnFechar = document.getElementById('btn-fechar-modal');
+    let ultimoFoco = null;
 
     function renderComentarios(comentarios) {
         comentariosListaEl.innerHTML = '';
@@ -61,15 +62,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
         renderComentarios(filme.comentarios);
 
+        ultimoFoco = document.activeElement;
         modal.classList.add('aberto');
         modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
+        btnFechar.focus();
     }
 
     function fecharModal() {
         modal.classList.remove('aberto');
         modal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
+        // Devolve o foco ao botão "Ver mais" que abriu o modal
+        if (ultimoFoco) ultimoFoco.focus();
+    }
+
+    // Mantém o Tab dentro do modal enquanto ele está aberto
+    function prenderFoco(e) {
+        const focaveis = modal.querySelectorAll('a[href], button');
+        const primeiro = focaveis[0];
+        const ultimo = focaveis[focaveis.length - 1];
+
+        if (e.shiftKey && document.activeElement === primeiro) {
+            e.preventDefault();
+            ultimo.focus();
+        } else if (!e.shiftKey && document.activeElement === ultimo) {
+            e.preventDefault();
+            primeiro.focus();
+        }
     }
 
     document.querySelectorAll('.btn-ver-mais').forEach((btn) => {
@@ -92,8 +112,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('aberto')) {
+        if (!modal.classList.contains('aberto')) return;
+        if (e.key === 'Escape') {
             fecharModal();
+        } else if (e.key === 'Tab') {
+            prenderFoco(e);
         }
     });
 });

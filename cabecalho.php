@@ -29,15 +29,15 @@ function link_ativo($trecho)
 
     <header class="header">
         <div class="logo">
-            <i class="fa-solid fa-clapperboard"></i>
+            <i class="fa-solid fa-clapperboard" aria-hidden="true"></i>
             StreamUp
         </div>
 
-        <div class="menu-toggle" id="mobile-menu">
-            <i class="fa-solid fa-bars"></i>
-        </div>
+        <button type="button" class="menu-toggle" id="mobile-menu" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-principal">
+            <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
 
-        <nav class="nav">
+        <nav class="nav" id="menu-principal" aria-label="Principal">
             <a href="<?php echo $base_url; ?>index.php"<?php echo link_ativo('/index.php'); ?>>Início</a>
             <a href="<?php echo $base_url; ?>filmes/listar.php"<?php echo link_ativo('/filmes/'); ?>>Filmes</a>
 
@@ -59,7 +59,9 @@ function link_ativo($trecho)
 
             if (mobileMenu && nav) {
                 mobileMenu.addEventListener('click', () => {
-                    nav.classList.toggle('active');
+                    const aberto = nav.classList.toggle('active');
+                    mobileMenu.setAttribute('aria-expanded', aberto);
+                    mobileMenu.setAttribute('aria-label', aberto ? 'Fechar menu' : 'Abrir menu');
                     const icon = mobileMenu.querySelector('i');
                     if (icon) {
                         icon.classList.toggle('fa-bars');
