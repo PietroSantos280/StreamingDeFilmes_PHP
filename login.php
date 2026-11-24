@@ -1,17 +1,19 @@
-
 <?php
 session_start();
 require __DIR__ . '/conexao.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
+    $email = trim($_POST['email'] ?? '');
+    $senha = $_POST['senha'] ?? '';
 
-    $sql = "SELECT * FROM usuarios WHERE email = '$email' AND senha = '$senha'";
-    $resultado = mysqli_query($conexao, $sql);
+    // Busca pelo e-mail com consulta preparada e confere a senha pelo hash
+    $stmt = mysqli_prepare($conexao, "SELECT id, nome, senha FROM usuarios WHERE email = ?");
+    mysqli_stmt_bind_param($stmt, 's', $email);
+    mysqli_stmt_execute($stmt);
+    $usuario = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
 
-    if (mysqli_num_rows($resultado) == 1) {
-        $usuario = mysqli_fetch_assoc($resultado);
+    if ($usuario && password_verify($senha, $usuario['senha'])) {
+        session_regenerate_id(true);
         $_SESSION['usuario_id'] = $usuario['id'];
         $_SESSION['usuario_nome'] = $usuario['nome'];
         header('Location: /StreamingDeFilmes_PHP/filmes/listar.php');

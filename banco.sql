@@ -97,10 +97,10 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`) VALUES
-(1, 'admin', 'admin@email.com', '123456'),
-(2, 'Maria Silva', 'maria@email.com', 'senha123'),
-(3, 'João Souza', 'joao@email.com', 'abc456'),
-(4, 'Ana Costa', 'ana@email.com', 'xyz789');
+(1, 'admin', 'admin@email.com', '$2y$10$SRsCZQGYGtzQsj7Gx9sct.P4NNtH2T4kyw0j5vBl5SM69OmusCLKW'),
+(2, 'Maria Silva', 'maria@email.com', '$2y$10$KUwNPrQFXBJWUnJ6BtUgT.uxRLOgD5mXPXNENHQMZ4sBfwgCSXtfG'),
+(3, 'João Souza', 'joao@email.com', '$2y$10$gdab3rVaqdoU5QD2BVvvD.FDW9R/QGkL7nN6TUZ8Cjd/pnihzkoH6'),
+(4, 'Ana Costa', 'ana@email.com', '$2y$10$2zp20O5dFK78ej3O0ZVYaecHCUxvWrR6qnx8k4BTJWxFZdK.EH93i');
 
 --
 -- Índices para tabelas despejadas

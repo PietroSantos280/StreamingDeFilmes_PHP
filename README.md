@@ -67,6 +67,7 @@ StreamingDeFilmes_PHP/
 │   ├── cadastrar.php      # cadastrar filme
 │   ├── excluir.php        # confirmar e excluir filme
 │   ├── listar.php         # catálogo com cards e modal de detalhes
+│   ├── validar_filme.php  # validação usada no cadastro e na edição
 │   └── verifica_login.php # bloqueia páginas para quem não está logado
 ├── js/
 │   └── modal-filmes.js    # abre o modal "Ver mais" com detalhes e avaliações
@@ -109,7 +110,7 @@ Pré-requisito: [XAMPP](https://www.apachefriends.org/) (testado com XAMPP 8.2: 
 
 ## Usuários de teste
 
-Todos já vêm cadastrados no `banco.sql`. Para entrar, use o e-mail e a senha em `http://localhost/StreamingDeFilmes_PHP/login.php`.
+Todos já vêm cadastrados no `banco.sql`. Para entrar, use o e-mail e a senha em `http://localhost/StreamingDeFilmes_PHP/login.php`. No banco as senhas ficam guardadas com `password_hash`, então lá aparece só o hash, não a senha abaixo.
 
 | Nome        | E-mail            | Senha      | Avaliações já feitas                              |
 |-------------|-------------------|------------|---------------------------------------------------|
@@ -132,7 +133,9 @@ Cada usuário só pode excluir as próprias avaliações. Entrando com usuários
 - **Destaques na página inicial:** os 3 filmes com maior nota.
 - **Excluir avaliação:** cada usuário só pode excluir as próprias avaliações.
 - **Validações:**
-  - campos obrigatórios no cadastro de filme;
+  - cadastro e edição de filme validados no servidor (`filmes/validar_filme.php`): campos obrigatórios, ano entre 1901 e 2155, duração entre 1 e 999 minutos, nota entre 0 e 5 e tamanho máximo de título e gênero;
   - nota entre 1 e 5 na avaliação;
-  - limites de ano, nota e tamanho de texto na edição;
   - textos exibidos com `htmlspecialchars` para não quebrar a página.
+- **Segurança:**
+  - consultas com dados do usuário feitas com *prepared statements* (`mysqli_prepare`), contra SQL injection;
+  - senhas guardadas com `password_hash` e conferidas com `password_verify`.
